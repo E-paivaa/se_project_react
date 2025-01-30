@@ -1,0 +1,26 @@
+.clothes-section{
+    padding-left: 116px;
+}
+
+.clothes__section-content{
+    display: flex;
+}
+
+.clothes__section-text{
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 24.8px;
+    text-align: left;
+}
+
+.clothes__section-add{
+    padding: 0;
+    margin: 0 20px 0 20px;
+    border: none;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    color: rgba(0, 0, 0, 0.6);
+    cursor: pointer;
+    background-color: transparent;
+}

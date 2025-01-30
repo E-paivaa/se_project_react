@@ -1,0 +1,61 @@
+/* Header.css */
+
+.header {
+  display: flex;
+  align-items: center;
+  padding: 32px 0 28px 0;
+}
+
+.header__logo {
+  margin-right: 24px;
+  width: 89px;
+  height: 40px;
+}
+
+.header__date-location {
+  margin: 0;
+  height: 24px;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+}
+
+.header__add-clothes {
+  padding: 0;
+  margin: 0 20px 0 20px;
+  border: none;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.header__user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header__username {
+  margin: 0;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+}
+
+.header__link {
+  text-decoration: none;
+  color: black;
+}
+
+.modal__button {
+  padding: 0;
+  margin-left: 20px;
+  border: none;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  cursor: pointer;
+  background-color: transparent;
+}
