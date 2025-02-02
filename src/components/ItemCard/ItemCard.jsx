@@ -1,4 +1,5 @@
 import "./ItemCard.css";
+import { useState } from "react";
 
 function ItemCard({ item, onCardClick, onCardLike, isLoggedIn }) {
   const handleCardClick = () => {

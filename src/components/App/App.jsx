@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { CurrentUserContext } from "../../utils/contexts/CurrentUserContext.js";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
 import { coordinates, APIkey } from "../../utils/constants";
