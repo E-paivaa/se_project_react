@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
 const LoginModal = ({
-    activeModal,
+    isOpen,
     onClose,
     onSignUpClick,
     handleLogin
@@ -21,22 +21,22 @@ const LoginModal = ({
         setEmail(e.target.value);
     };
  
-    const handleSubmit = (e) => {
+    const handleLoginSubmit = (e) => {
         e.preventDefault();
         handleLogin(email, password);
     };
 
     useEffect(() => {
-        if (activeModal) {
+        if (isOpen) {
           setEmail("");
           setPassword("");
         }
-      }, [activeModal]);
+      }, [isOpen]);
 
     return (
         <ModalWithForm
         title="Log in"
-        isOpen={activeModal === "login"}
+        isOpen={isOpen}
         onClose={onClose}
         >
             <div className="modal__text-deco">
@@ -68,14 +68,14 @@ const LoginModal = ({
                 />
             </label>
             <div className="modal__button-div">
-            <button type="submit" className="modal__button-login"   onClick={handleSubmit}>
+            <button type="button" className="modal__button-login"   onClick={handleLoginSubmit}>
                 {" "}
                  Log In
             </button>
 
             or
             
-            <button type="submit" className="modal__button-signup" onClick={onSignUpClick}>
+            <button type="button" className="modal__button-signup" onClick={onSignUpClick}>
                 Sign Up
                 {" "}
             </button>

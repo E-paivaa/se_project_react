@@ -28,3 +28,25 @@
   width: 325px;
   height: 328px;
 }
+
+
+.card__like {
+  background-image: url(../../assets/likebutton.png);
+  background-color: transparent;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 18px;
+  height: 15px;
+  border: none;
+}
+
+.card__like:hover {
+  opacity: 50%;
+  transition: 0.2s linear;
+  cursor: pointer;
+}
+
+.card__like_active {
+  background-image: url(../../assets/likedbutton.png);
+}

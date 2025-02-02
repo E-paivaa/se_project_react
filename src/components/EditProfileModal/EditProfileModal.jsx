@@ -4,10 +4,8 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { CurrentUserContext } from "../../utils/contexts/CurrentUserContext";
 
 const EditProfileModal =({
-    activeModal,
-    closeActiveModal,
-    handleSubmit,
-    onCreateModal,
+    isOpen,
+    handleEdit,
     onClose
 }) => {
     const [name, setName] = useState("");
@@ -15,25 +13,23 @@ const EditProfileModal =({
     const [imageUrl, setImageUrl] = useState('');
 
     useEffect(() => {
-        if (activeModal) {
+        if (isOpen) {
             setName(currentUser?.name);
             setImageUrl(currentUser?.avatar);
         }
-    }, [activeModal]);
+    }, [isOpen]);
 
-    handleSubmit = (e) => {
+    const handleEditProfileSubmit = (e) => {
         e.preventDefault();
-        onSubmit({name, avatar: imageUrl});
+        handleEdit({name, avatar: imageUrl});
     };
 
     return (
         <ModalWithForm
         title="Change Profile Data"
         buttonText="Save Changes"
-        isOpen={activeModal === "edit"}
+        isOpen={isOpen}
         onClose={onClose}
-        onClick={onCreateModal}
-        onSubmit={handleSubmit}
         >
             <label>
                 Name * 
@@ -62,7 +58,7 @@ const EditProfileModal =({
                     onChange={(e) => setImageUrl(e.target.value)}
                 />
             </label>
-            <button type="submit" className="modal__save-changes-button">
+            <button type="button" className="modal__save-changes-button" onClick={handleEditProfileSubmit}>
                 Save Changes
             </button>
         </ModalWithForm>

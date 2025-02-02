@@ -77,7 +77,7 @@
   margin: 0 0 32px 0;
 }
 
-.modal__submit {
+/* .modal__submit {
   color: #ffffff;
   font-weight: 700;
   font-size: 16px;
@@ -92,7 +92,7 @@
 
 .modal__submit:hover {
   background-color: rgba(0, 0, 0, 0.6);
-}
+} */
 
 .modal__legend {
   font-weight: 700;
