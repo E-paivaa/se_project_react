@@ -43,7 +43,7 @@ function App() {
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
   const [clothingItem, setClothingItem] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
-  const [currentUser] = useState("");
+  const [ setCurrentUser] = useState("");
 
   const handleToggleSwitchChange = () => {
     setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
@@ -135,7 +135,7 @@ function App() {
       api
         .editUser(token, name, avatar)
         .then((res) => {
-          handleCloseModal();
+          closeActiveModal();
           setCurrentUser(res);
         })
         .catch((err) => console.error(err));
@@ -143,7 +143,7 @@ function App() {
   };
 
   const handleLogout = () => {
-    setIsloggedIn(false);
+    setIsLoggedIn(false);
     setCurrentUser(currentUser === null);
     localStorage.removeItem("jwt");
   };
@@ -160,8 +160,8 @@ function App() {
   useEffect(() => {
     api
       .getItems()
-      .then((data) => {
-        setClothingItem(data);
+      .then((data) => {n
+        setClothingItem(data.data);
       })
       .catch(console.error);
   }, []);
@@ -193,6 +193,7 @@ function App() {
               weatherData={weatherData}
               onSignUpClick={handleRegisterModal}
               onLoginClick={handleLoginModal}
+              
             />
             <Routes>
               <Route
@@ -239,7 +240,7 @@ function App() {
             activeModal={activeModal}
             onClose={closeActiveModal}
             handleRegistration={handleRegistration}
-            handleLogin={handleLogin}
+            // handleLogin={handleLogin}
             onCreateModal={handleRegisterModal}
             onLoginClick={toggleModal}
           />

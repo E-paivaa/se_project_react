@@ -5,8 +5,8 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 const LoginModal = ({
     activeModal,
     onClose,
-    onLoginClick,
-    onSignUpClick
+    onSignUpClick,
+    handleLogin
 }) => {
 
     const [email, setEmail] = useState("");
@@ -23,7 +23,7 @@ const LoginModal = ({
  
     const handleSubmit = (e) => {
         e.preventDefault();
-        handleRegistration(email, password);
+        handleLogin(email, password);
     };
 
     useEffect(() => {
@@ -37,7 +37,6 @@ const LoginModal = ({
         <ModalWithForm
         title="Log in"
         isOpen={activeModal === "login"}
-        onSubmit={handleSubmit}
         onClose={onClose}
         >
             <div className="modal__text-deco">
@@ -69,7 +68,7 @@ const LoginModal = ({
                 />
             </label>
             <div className="modal__button-div">
-            <button type="submit" className="modal__button-login" onClick={onLoginClick}>
+            <button type="submit" className="modal__button-login"   onClick={handleSubmit}>
                 {" "}
                  Log In
             </button>

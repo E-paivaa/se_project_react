@@ -17,7 +17,7 @@ class Api {
     }).then(this._checkResponse);
   }
 
-  addItem({ name, link, weather }) {
+  addItems({ name, link, weather }) {
     const token = localStorage.getItem("jwt");
     return fetch(this.baseUrl + "/items", {
       method: "POST",
@@ -33,7 +33,7 @@ class Api {
     }).then(this._checkResponse);
   }
 
-  deleteItem(id) {
+  deleteItems(id) {
     const token = localStorage.getItem("jwt");
     return fetch(this.baseUrl + "/items/" + id, {
       method: "DELETE",

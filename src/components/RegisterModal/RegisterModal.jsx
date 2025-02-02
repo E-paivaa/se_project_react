@@ -6,7 +6,6 @@ const RegisterModal = ({
     activeModal,
     handleRegistration,
     onLoginClick,
-    onSignUpClick,
     onClose
 }) => {
     const [name, setName] = useState("");
@@ -48,7 +47,6 @@ const RegisterModal = ({
         title="Sign up"
         isOpen={activeModal === "signup"}
         onClose={onClose}
-        onSubmit={handleSubmit}
         >
             <div className="modal__text-deco">
             <label>
@@ -105,7 +103,7 @@ const RegisterModal = ({
                 />
             </label>
             <div className="modal__button-div">
-            <button type="submit" className="modal__button-sign-up" onClick={onSignUpClick}>
+            <button type="submit" className="modal__button-sign-up" onClick={handleSubmit}>
                 Sign Up
                 {" "}
             </button>
