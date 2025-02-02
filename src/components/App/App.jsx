@@ -18,17 +18,17 @@ import LoginModal from "../LoginModal/LoginModal.jsx";
 import EditProfileModal from "../EditProfileModal/EditProfileModal.jsx";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
-import Api from "../../utils/api";
+import {
+  editUser, 
+  removeCardLike, 
+  addCardLike,
+  deleteItems, 
+  addItems,
+  getItems
+} from "../../utils/api";
 import Auth from "../../utils/auth.js";
 
 const auth = new Auth({
-  baseUrl: "http://localhost:3001",
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
-
-const api = new Api({
   baseUrl: "http://localhost:3001",
   headers: {
     "Content-Type": "application/json",
@@ -113,8 +113,7 @@ function App() {
   const navigate = useNavigate();
 
   const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
-    api
-      .addItems(name, imageUrl, weather)
+      addItems(name, imageUrl, weather)
       .then((values) => {
         setClothingItem([values, ...clothingItem]);
         closeActiveModal();
@@ -123,8 +122,7 @@ function App() {
   };
 
   const handleDeleteItem = (id) => {
-    api
-      .deleteItems(id)
+     deleteItems(id)
       .then(() => {
         setClothingItem(clothingItem.filter((item) => item._id !== id));
         closeActiveModal();
@@ -165,8 +163,7 @@ function App() {
   const handleEdit = ({ name, avatar }) => {
     const token = localStorage.getItem("jwt");
     if (name && avatar) {
-      api
-        .editUser({ name, avatar}, token)
+      editUser({ name, avatar}, token)
         .then((res) => {
           closeActiveModal();
           setCurrentUser(res);
@@ -185,8 +182,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    api
-      .getItems()
+    getItems()
       .then((data) => {
         setClothingItem(data.data);
       })
