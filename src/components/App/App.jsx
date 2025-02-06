@@ -163,7 +163,7 @@ function App() {
   const handleEdit = ({ name, avatar }) => {
     const token = localStorage.getItem("jwt");
     if (name && avatar) {
-      editUser({ name, avatar}, token)
+      editUser({ name, avatar},id, token)
         .then((res) => {
           closeActiveModal();
           setCurrentUser(res);

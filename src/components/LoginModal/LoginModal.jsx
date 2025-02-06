@@ -38,6 +38,7 @@ const LoginModal = ({
         title="Log in"
         isOpen={isOpen}
         onClose={onClose}
+        onSubmit={handleLoginSubmit}
         >
             <div className="modal__text-deco">
             <label>
@@ -68,7 +69,7 @@ const LoginModal = ({
                 />
             </label>
             <div className="modal__button-div">
-            <button type="button" className="modal__button-login"   onClick={handleLoginSubmit}>
+            <button type="submit" className="modal__button-login">
                 {" "}
                  Log In
             </button>

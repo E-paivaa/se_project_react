@@ -47,6 +47,7 @@ const RegisterModal = ({
         title="Sign up"
         isOpen={isOpen}
         onClose={onClose}
+        onSubmit={handleRegistrationSubmit}
         >
             <div className="modal__text-deco">
             <label>
