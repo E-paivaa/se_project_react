@@ -16,7 +16,8 @@ const getItems = () => {
   })
 };
 
-const addItems = ({ name, imageUrl, weather }, token) => {
+const addItems = ({ name, imageUrl, weather }) => {
+  const token = localStorage.getItem("jwt");
   return request(`${baseUrl}/items`, {
     method: "POST",
     headers: {
@@ -27,7 +28,8 @@ const addItems = ({ name, imageUrl, weather }, token) => {
   })
 };
 
-const deleteItems = (item, token) => {
+const deleteItems = (item) => {
+  const token = localStorage.getItem("jwt");
   return request(`${baseUrl}/items/${item._id}`, {
     method: "DELETE",
     headers: {
