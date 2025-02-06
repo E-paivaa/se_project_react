@@ -26,14 +26,11 @@ import {
   addItems,
   getItems
 } from "../../utils/api";
-import Auth from "../../utils/auth.js";
-
-const auth = new Auth({
-  baseUrl: "http://localhost:3001",
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
+import {
+  registerUser,
+  loginUser,
+  verifyToken
+} from "../../utils/auth.js";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -130,12 +127,10 @@ function App() {
       .catch((error) => console.log(error));
   };
 
-  const handleLogin = ({ email, password }) => {
-    if (email && password) {
-      auth
-        .loginUser({ email, password })
+  const handleLogin = (values ) => {
+        loginUser(values)
         .then((data) => {
-          return auth.verifyToken(data.token);
+          return verifyToken(data.token);
         })
         .then((currentUser) => {
           setCurrentUser(currentUser);
@@ -144,20 +139,16 @@ function App() {
           navigate("/profile");
         })
         .catch((err) => console.error(err));
-    }
   };
 
-  const handleRegistration = ({ name, avatar, email, password }) => {
-    if (name && avatar && email && password) {
-      auth
-        .registerUser({ name, avatar, email, password })
+  const handleRegistration = (values) => {
+        registerUser(values)
         .then((res) => {
           console.log(res);
           closeActiveModal();
-          handleLogin({email, password});
+          handleLogin({ email: values.email, password: values.password });
         })
         .catch((err) => console.error(err));
-    }
   };
 
   const handleEdit = ({ name, avatar }) => {
@@ -192,8 +183,7 @@ function App() {
   useEffect(() => {
     const token = localStorage.getItem("jwt");
     if (token) {
-      auth
-        .verifyToken(token)
+        verifyToken(token)
         .then((user) => {
           setCurrentUser(user);
           setIsLoggedIn(true);

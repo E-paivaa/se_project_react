@@ -1,57 +1,55 @@
 
-class Auth {
-    constructor({ baseUrl, headers }) {
-        this.baseUrl = baseUrl;
-        this.headers = headers;
-}
+const baseUrl = "http://localhost:3001";
+import { checkResponse } from "./api";
 
-_checkResponse(res) {
-    if (res.ok) {
-        return res.json();
-    }
-    return Promise.reject(`Error ${res.status}`);
-}
-
-_addToStorage(res) {
+function addToStorage(res) {
     localStorage.setItem("jwt", res.token);
     return res.token;
 }
 
-registerUser({ name, avatar, email, password }) {
-    return fetch(this.baseUrl + "/signup/", {
-        method: "POST",
-        headers: this.headers,
-        body: JSON.stringify({
-            name,
-            avatar,
-            email,
-            password
-            }),
-    }).then(this._checkResponse);
-}
-
-loginUser({ email, password }) {
-    return fetch(this.baseUrl + "/signin/", {
-        method: "POST",
-        headers: this._headers,
-        body: JSON.stringify({
-            email,
-            password
-        }),
-    })
-    .then(this._checkResponse)
-    .then(this._addToStorage);
-}
-
-verifyToken(token) {
-    return fetch(this.baseUrl + "/signout/", {
+function registerUser(userData) {
+    return fetch(`${baseUrl}/signup/`, {
         method: "POST",
         headers: {
-            ...this._headers,
-            Authorization: `Bearer ${token}`
-        },
-    }).then(this._checkResponse);    
- }
+            "Content-Type": "application/json",
+          },
+        body: JSON.stringify({
+            name:userData.name,
+            avatar:userData.avatar,
+            email:userData.email,
+            password:userData.password,
+            }),
+    }).then(checkResponse);
 }
 
-export default Auth;
+function loginUser(userData) {
+    return fetch(`${baseUrl}/signin/`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+          },
+        body: JSON.stringify({
+            email: userData.email,
+            password: userData.password,
+        }),
+    })
+    .then(checkResponse)
+    .then(addToStorage);
+}
+
+function verifyToken(token) {
+    return fetch(`${baseUrl}/signout/`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+        },
+    }).then(checkResponse);    
+ }
+
+
+export {
+    registerUser,
+    loginUser,
+    verifyToken
+};
