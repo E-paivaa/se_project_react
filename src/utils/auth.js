@@ -1,14 +1,14 @@
 
 const baseUrl = "http://localhost:3001";
-import { checkResponse } from "./api";
+import { request } from "./api";
 
 function addToStorage(res) {
     localStorage.setItem("jwt", res.token);
     return res.token;
 }
 
-function registerUser(userData) {
-    return fetch(`${baseUrl}/signup/`, {
+const registerUser = (userData) => {
+    return request(`${baseUrl}/signup/`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -19,32 +19,32 @@ function registerUser(userData) {
             email:userData.email,
             password:userData.password,
             }),
-    }).then(checkResponse);
+    })
 }
 
-function loginUser(userData) {
-    return fetch(`${baseUrl}/signin/`, {
+const loginUser = (userData) => {
+    const token = localStorage.getItem("jwt");
+    return request(`${baseUrl}/signin/`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+             Authorization: `Bearer ${token}`,
           },
         body: JSON.stringify({
             email: userData.email,
             password: userData.password,
         }),
     })
-    .then(checkResponse)
-    .then(addToStorage);
 }
 
-function verifyToken(token) {
-    return fetch(`${baseUrl}/signout/`, {
-        method: "POST",
+const verifyToken = (token) => {
+    return request(`${baseUrl}/users/me`, {
+        method: "GET",
         headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`
         },
-    }).then(checkResponse);    
+    })    
  }
 
 

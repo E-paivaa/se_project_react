@@ -23,7 +23,7 @@ const LoginModal = ({
  
     const handleLoginSubmit = (e) => {
         e.preventDefault();
-        handleLogin(email, password);
+        handleLogin({email, password});
     };
 
     useEffect(() => {

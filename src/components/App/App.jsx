@@ -130,7 +130,7 @@ function App() {
   const handleLogin = (values ) => {
         loginUser(values)
         .then((data) => {
-          return verifyToken(data.token);
+          return verifyToken(data);
         })
         .then((currentUser) => {
           setCurrentUser(currentUser);
@@ -153,14 +153,12 @@ function App() {
 
   const handleEdit = ({ name, avatar }) => {
     const token = localStorage.getItem("jwt");
-    if (name && avatar) {
       editUser({ name, avatar},id, token)
         .then((res) => {
           closeActiveModal();
           setCurrentUser(res);
         })
         .catch((err) => console.error(err));
-    }
   };
 
   useEffect(() => {
