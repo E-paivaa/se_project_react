@@ -130,7 +130,7 @@ function App() {
   const handleLogin = (values ) => {
         loginUser(values)
         .then((data) => {
-          return verifyToken(data);
+          return verifyToken(data.token);
         })
         .then((currentUser) => {
           setCurrentUser(currentUser);
