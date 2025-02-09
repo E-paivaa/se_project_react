@@ -32,7 +32,7 @@ function Main({ weatherData, onCardClick, clothingItem, onCardLike, isLoggedIn})
               })
               .map((item) => {
           return (
-            <ItemCard key={item._id} item={item} onCardClick={onCardClick} onCardLike={onCardLike} isLogged={isLoggedIn} />
+            <ItemCard key={item._id} item={item} onCardClick={onCardClick} onCardLike={onCardLike} isLogged={isLoggedIn}/>
           );
         })}
         </ul>

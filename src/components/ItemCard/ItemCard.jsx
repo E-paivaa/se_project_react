@@ -1,19 +1,18 @@
 import "./ItemCard.css";
-import { useState } from "react";
+import { useContext } from "react";
 
-function ItemCard({ item, onCardClick, onCardLike, isLoggedIn }) {
+function ItemCard({ item, onCardClick, onCardLike, isLoggedIn}) {
   const handleCardClick = () => {
     onCardClick(item);
   };
 
-  const [isLiked, setIsLiked] = useState(
-    item.likes.some((id) => id === currentUser?.user?._id)
-  );
+  const currentUser = useContext(CurrentUserContext);
+  const isLiked = item.likes.some((id) => id === currentUser?._id);
 
   const handleLike = () => {
     onCardLike({ id: item._id, isLiked: isLiked })
       .then(() => {
-        setIsLiked(!isLiked);
+        isLiked(!isLiked);
       })
       .catch((err) => {
         console.error("Error toggling like:", err);
