@@ -2,10 +2,10 @@
 const baseUrl = "http://localhost:3001";
 import { request } from "./api";
 
-function addToStorage(res) {
-    localStorage.setItem("jwt", res.token);
-    return res.token;
-}
+// function addToStorage(res) {
+//     localStorage.setItem("jwt", res.token);
+//     return res.token;
+// }
 
 const registerUser = (userData) => {
     return request(`${baseUrl}/signup/`, {

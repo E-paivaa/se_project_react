@@ -151,9 +151,8 @@ function App() {
         .catch((err) => console.error(err));
   };
 
-  const handleEdit = ({ name, avatar }) => {
-    const token = localStorage.getItem("jwt");
-      editUser({ name, avatar},id, token)
+  const handleEdit = ({name, avatar, id, token}) => {
+      editUser(name, avatar, id, token)
         .then((res) => {
           closeActiveModal();
           setCurrentUser(res);

@@ -30,7 +30,7 @@ const RegisterModal = ({
     };
     const handleRegistrationSubmit = (e) => {
         e.preventDefault();
-        handleRegistration(name, email, password, avatar);
+        handleRegistration({name, email, password, avatar});
     };
 
     useEffect(() => {

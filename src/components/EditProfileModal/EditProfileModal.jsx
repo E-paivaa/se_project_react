@@ -11,12 +11,27 @@ const EditProfileModal =({
     const [name, setName] = useState("");
     const { currentUser } = useContext(CurrentUserContext);
     const [imageUrl, setImageUrl] = useState('');
+   
+    const handleNameChange = (e) => {
+        console.log(e.target.value);
+        setName(e.target.value);
+    };
+    const handleImageUrlChange = (e) => {
+        console.log(e.target.value);
+        setImageUrl(e.target.value);
+    };
 
     useEffect(() => {
         if (isOpen) {
+          setName("");
+          setImageUrl("");
+        }
+      }, [isOpen]);
+
+
+    useEffect(() => {
             setName(currentUser?.name);
             setImageUrl(currentUser?.avatar);
-        }
     }, [isOpen]);
 
     const handleEditProfileSubmit = (e) => {
@@ -30,6 +45,7 @@ const EditProfileModal =({
         buttonText="Save Changes"
         isOpen={isOpen}
         onClose={onClose}
+        onSubmit={handleEditProfileSubmit}
         >
             <label>
                 Name * 
@@ -42,7 +58,7 @@ const EditProfileModal =({
                     placeholder="Name"
                     required
                     value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    onChange={handleNameChange}
                 />
             </label>
             <label>
@@ -55,10 +71,10 @@ const EditProfileModal =({
                     placeholder="Avatar URL"
                     required
                     value={imageUrl}
-                    onChange={(e) => setImageUrl(e.target.value)}
+                    onChange={handleImageUrlChange}
                 />
             </label>
-            <button type="button" className="modal__save-changes-button" onClick={handleEditProfileSubmit}>
+            <button type="submit" className="modal__save-changes-button">
                 Save Changes
             </button>
         </ModalWithForm>
