@@ -8,14 +8,18 @@ function ItemCard({ item, onCardClick, onCardLike, isLoggedIn}) {
     onCardClick(item);
   };
 
-  const currentUser = useContext(CurrentUserContext);
-  const isLiked = item.likes.some((id) => id === currentUser?._id);
+  const { currentUser } = useContext(CurrentUserContext);
+  const isLiked = currentUser ? item.likes.some((id) => id === currentUser._id) : false;
 
   const handleLike = () => {
+    const newLikes = [...item.likes];
+    if (isLiked) {
+      const index = newLikes.indexOf(currentUser._id);
+      if (index !== -1) newLikes.splice(index, 1);
+    } else {
+      newLikes.push(currentUser._id);
+    }
     onCardLike({ id: item._id, isLiked: isLiked })
-      .then(() => {
-        isLiked(!isLiked);
-      })
       .catch((err) => {
         console.error("Error toggling like:", err);
       });

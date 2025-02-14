@@ -1,11 +1,13 @@
 import "./ItemModal.css";
+import { useContext } from "react";
 import { CurrentUserContext } from "../../utils/contexts/CurrentUserContext";
 
 function ItemModal({ item, onClose, isOpen, handleDeleteItem}) {
-  const isOwn = item.owner === CurrentUserContext._id;
-  const itemDeleteModal = (
-    `modal__delete-button ${isOwn ? '' : 'modal__delete-button_hidden'}`
-  );
+  const { currentUser } = useContext(CurrentUserContext);
+  const isOwn = item?.owner === currentUser?._id;
+  // const itemDelete = (
+  //   `modal__delete-button ${isOwn ? '' : 'modal__delete-button_hidden'}`
+  // );
   return (
     <div className={`modal ${isOpen ? "modal_opened" : ""}`}>
       <div className="modal__content_type_image">
@@ -17,13 +19,15 @@ function ItemModal({ item, onClose, isOpen, handleDeleteItem}) {
         <div className="modal__footer">
           <h2 className="modal__description">{item.name}</h2>
           <p className="modal__weather"> Weather: {item.weather}</p>
+          {isOwn && (
           <button
             type="button"
-            className={itemDeleteModal}
-            onClick={() => handleDeleteItem(item._id)}
+            className= "modal__delete-button" 
+            onClick={() => handleDeleteItem(item)}
           >
             Delete Item
           </button>
+          )}
         </div>
       </div>
     </div>

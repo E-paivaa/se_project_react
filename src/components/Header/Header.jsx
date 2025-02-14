@@ -4,7 +4,7 @@ import headerAvatar from "../../assets/avatar.png";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import "./Header.css";
 import { CurrentUserContext } from "../../utils/contexts/CurrentUserContext";
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 function Header({ handleAddClick, weatherData, onSignUpClick, onLoginClick }) {
   const currentDate = new Date().toLocaleString("default", {
@@ -12,17 +12,8 @@ function Header({ handleAddClick, weatherData, onSignUpClick, onLoginClick }) {
     day: "numeric",
   });
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const { currentUser } = React.useContext(CurrentUserContext);
-
-  useEffect(() => {
-    if (currentUser) {
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
-    }
-  }, [currentUser]);
+  const { currentUser} = React.useContext(CurrentUserContext);
 
   return (
     <div className="header">
@@ -33,24 +24,7 @@ function Header({ handleAddClick, weatherData, onSignUpClick, onLoginClick }) {
         {currentDate}, {weatherData.city}{" "}
       </p>
       <ToggleSwitch />
-      {isLoggedIn ? (
-        <>
-          <button
-            className="header__add-clothes"
-            type="button"
-            onClick={handleAddClick}
-          >
-            {" "}
-            + Add clothes
-          </button>
-          <Link to="/profile" className="header__link">
-            <div className="header__user">
-              <p className="header__username"> Edward Paiva</p>
-              <img src={headerAvatar} alt="avatar" className="header__avatar" />
-            </div>
-          </Link>
-        </>
-      ) : (
+      {!currentUser ? (
         <>
           <button className="modal__button" onClick={onSignUpClick}>
             Sign Up
@@ -58,6 +32,22 @@ function Header({ handleAddClick, weatherData, onSignUpClick, onLoginClick }) {
           <button className="modal__button" onClick={onLoginClick}>
             Log In
           </button>
+        </>
+      ) : (
+      <>
+          <button
+            className="header__add-clothes"
+            type="button"
+            onClick={handleAddClick}
+          >
+            + Add clothes
+          </button>
+          <Link to="/profile" className="header__link">
+            <div className="header__user">
+              <p className="header__username"> {currentUser?.name || ''} </p>
+              <img src={currentUser?.avatar || headerAvatar} alt="avatar" className="header__avatar" />
+            </div>
+          </Link>
         </>
       )}
     </div>

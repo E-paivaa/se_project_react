@@ -21,7 +21,7 @@
   border-radius: 20px 20px 0px 0px;
 }
 
-.modal__delete_item {
+.modal__delete-button {
   color:rgba(255, 77, 0, 1);
   background: none;
   height: 24px;
@@ -35,6 +35,10 @@
   padding: 0 32px 0 0;
   cursor: pointer;
 }
+
+/* .modal__delete-button_hidden {
+  visibility: none;
+} */
 
 .modal__footer {
   position: relative;
@@ -53,6 +57,7 @@
 }
 
 .modal__close {
+  cursor: pointer;
   padding: 0;
   line-height: 14px;
   width: 14px;

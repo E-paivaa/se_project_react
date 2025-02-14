@@ -43,7 +43,7 @@ function App() {
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
   const [clothingItem, setClothingItem] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [ currentUser, setCurrentUser] = useState({});
+  const [currentUser, setCurrentUser] = useState({});
 
   const handleCardClick = (card) => {
     setActiveModal("preview");
@@ -90,18 +90,18 @@ function App() {
   function handleCardLike({ id, isLiked }) {
     console.log("Item ID:", id);
     const token = localStorage.getItem("jwt");
-    return !isLiked
+     !isLiked
       ? addCardLike(id, token)
           .then((updatedCard) => {
             setClothingItem((cards) =>
-              cards.map((item) => (item._id === id ? updatedCard.item : item))
+              cards.map((item) => (item._id === id ? updatedCard : item))
             );
           })
           .catch((err) => console.log(err))
       : removeCardLike(id, token)
           .then((updatedCard) => {
             setClothingItem((cards) =>
-              cards.map((item) => (item._id === id ? updatedCard.item : item))
+              cards.map((item) => (item._id === id ? updatedCard : item))
             );
           })
           .catch((err) => console.log(err));
@@ -110,7 +110,8 @@ function App() {
   const navigate = useNavigate();
 
   const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
-      addItems(name, imageUrl, weather)
+    const token = localStorage.getItem("jwt");
+      addItems(name, imageUrl, weather, token)
       .then((values) => {
         setClothingItem([values, ...clothingItem]);
         closeActiveModal();
@@ -118,13 +119,15 @@ function App() {
       .catch((err) => console.log(err));
   };
 
-  const handleDeleteItem = (id) => {
-     deleteItems(id)
+  const handleDeleteItem = () => {
+    if(selectedCard){
+     deleteItems(selectedCard._id)
       .then(() => {
-        setClothingItem(clothingItem.filter((item) => item._id !== id));
+        setClothingItem(clothingItem.filter((item) => item._id !== selectedCard._id));
         closeActiveModal();
       })
       .catch((error) => console.log(error));
+    }
   };
 
   const handleLogin = (values ) => {
@@ -226,6 +229,7 @@ function App() {
                 element={
                  <ProtectedRoute isLoggedIn={isLoggedIn}>
                   <Profile
+                    onCardLike={handleCardLike}
                     onClose={closeActiveModal}
                     OnEditClick={handleEditModal}
                     onCardClick={handleCardClick}
