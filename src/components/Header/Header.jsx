@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import headerLogo from "../../assets/logo.svg";
-import headerAvatar from "../../assets/avatar.png";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import "./Header.css";
 import { CurrentUserContext } from "../../utils/contexts/CurrentUserContext";
@@ -13,7 +12,7 @@ function Header({ handleAddClick, weatherData, onSignUpClick, onLoginClick }) {
   });
 
 
-  const { currentUser} = React.useContext(CurrentUserContext);
+  const currentUser = React.useContext(CurrentUserContext);
 
   return (
     <div className="header">
@@ -45,7 +44,7 @@ function Header({ handleAddClick, weatherData, onSignUpClick, onLoginClick }) {
           <Link to="/profile" className="header__link">
             <div className="header__user">
               <p className="header__username"> {currentUser?.name || ''} </p>
-              <img src={currentUser?.avatar || headerAvatar} alt="avatar" className="header__avatar" />
+              <img src={currentUser?.avatar || ''} alt="avatar" className="header__avatar" />
             </div>
           </Link>
         </>

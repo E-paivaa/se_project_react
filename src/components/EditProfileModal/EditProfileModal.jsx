@@ -1,5 +1,5 @@
 import "./EditProfileModal.css";
-import { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { CurrentUserContext } from "../../utils/contexts/CurrentUserContext";
 
@@ -9,7 +9,7 @@ const EditProfileModal =({
     onClose
 }) => {
     const [name, setName] = useState("");
-    const {currentUser} = useContext(CurrentUserContext);
+    const currentUser = React.useContext(CurrentUserContext);
     const [imageUrl, setImageUrl] = useState('');
    
     const handleNameChange = (e) => {

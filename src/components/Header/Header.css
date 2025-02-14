@@ -44,6 +44,15 @@
   line-height: 24px;
 }
 
+.header__avatar {
+  width: 40px;
+  height: 40px;
+  left: 1320px;
+  gap: 0px;
+  border: 1px 0px 0px 0px;
+  opacity: 0px;
+}
+
 .header__link {
   text-decoration: none;
   color: black;

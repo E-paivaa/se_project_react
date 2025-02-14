@@ -1,7 +1,11 @@
 import headerAvatar from "../../assets/avatar.png";
 import "./SideBar.css";
+import { CurrentUserContext } from "../../utils/contexts/CurrentUserContext";
+import React from "react";
 
-function Sidebar({currentUser, onLogoutClick, OnEditClick}) {
+function Sidebar({onLogoutClick, OnEditClick}) {
+
+  const currentUser = React.useContext(CurrentUserContext);
 
   return (
     <div className="sidebar">

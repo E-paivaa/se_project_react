@@ -1,16 +1,19 @@
 .sidebar {
   display: flex;
-  position: relative;
+  flex-wrap: wrap;
+  max-width: 229px;
 }
 
 .sidebar__avatar {
-    width: 56px;
-    height: 56px;
+  width: 56px;
+  height: 56px;
+  align-self: center;
 }
 
 .sidebar__log {
-  position: absolute;
-  margin-top: 80px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 24px;
 }
 
 .sidebar__username {
@@ -19,7 +22,9 @@
   line-height: 24.8px;
   margin-left: 16px;
   color: rgba(0, 0, 0, 1);
-
+  justify-content: center;
+  width: 157px;
+  height: 25px;
 }
 
 .sidebar__change {
