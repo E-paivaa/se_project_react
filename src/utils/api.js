@@ -59,7 +59,7 @@ const removeCardLike = (id, token) => {
   })
 };
 
-const editUser = (name, avatar, id, token) => {
+const editUser = (name, imageUrl, id, token) => {
   return request(`${baseUrl}/items/${id}/users/me`, {
     method: "PATCH",
     headers: {
@@ -68,7 +68,7 @@ const editUser = (name, avatar, id, token) => {
     },
       body: JSON.stringify({
         name,
-        avatar,
+        avatar: imageUrl,
       }),
   })
 };

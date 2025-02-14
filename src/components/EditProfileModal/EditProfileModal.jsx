@@ -9,7 +9,7 @@ const EditProfileModal =({
     onClose
 }) => {
     const [name, setName] = useState("");
-    const { currentUser } = useContext(CurrentUserContext);
+    const {currentUser} = useContext(CurrentUserContext);
     const [imageUrl, setImageUrl] = useState('');
    
     const handleNameChange = (e) => {
@@ -29,10 +29,12 @@ const EditProfileModal =({
       }, [isOpen]);
 
 
-    useEffect(() => {
-            setName(currentUser?.name);
-            setImageUrl(currentUser?.avatar);
-    }, [isOpen]);
+      useEffect(() => {
+        if (isOpen) {
+          setName(currentUser?.name || '');
+          setImageUrl(currentUser?.avatar || '');
+        }
+      }, [isOpen, currentUser]);
 
     const handleEditProfileSubmit = (e) => {
         e.preventDefault();

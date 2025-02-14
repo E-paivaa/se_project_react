@@ -151,11 +151,11 @@ function App() {
         .catch((err) => console.error(err));
   };
 
-  const handleEdit = ({name, avatar, id, token}) => {
-      editUser(name, avatar, id, token)
+  const handleEdit = ({name, imageUrl, id, token}) => {
+      editUser(name, imageUrl, id, token)
         .then((res) => {
-          closeActiveModal();
           setCurrentUser(res);
+          closeActiveModal();
         })
         .catch((err) => console.error(err));
   };
