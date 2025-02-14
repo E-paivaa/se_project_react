@@ -130,6 +130,7 @@ function App() {
   const handleLogin = (values ) => {
         loginUser(values)
         .then((data) => {
+          localStorage.setItem("jwt", data.token);
           return verifyToken(data.token);
         })
         .then((currentUser) => {
@@ -151,8 +152,9 @@ function App() {
         .catch((err) => console.error(err));
   };
 
-  const handleEdit = ({name, imageUrl, id, token}) => {
-      editUser(name, imageUrl, id, token)
+  const handleEdit = ({name, imageUrl}) => {
+    const token = localStorage.getItem("jwt");
+      editUser(name, imageUrl, token)
         .then((res) => {
           setCurrentUser(res);
           closeActiveModal();

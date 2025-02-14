@@ -59,8 +59,8 @@ const removeCardLike = (id, token) => {
   })
 };
 
-const editUser = (name, imageUrl, id, token) => {
-  return request(`${baseUrl}/items/${id}/users/me`, {
+const editUser = (name, imageUrl, token) => {
+  return request(`${baseUrl}/users/me`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
