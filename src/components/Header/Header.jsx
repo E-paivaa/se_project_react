@@ -3,7 +3,7 @@ import headerLogo from "../../assets/logo.svg";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import "./Header.css";
 import { CurrentUserContext } from "../../utils/contexts/CurrentUserContext";
-import React from "react";
+import { useContext } from "react";
 
 function Header({ handleAddClick, weatherData, onSignUpClick, onLoginClick }) {
   const currentDate = new Date().toLocaleString("default", {
@@ -12,7 +12,7 @@ function Header({ handleAddClick, weatherData, onSignUpClick, onLoginClick }) {
   });
 
 
-  const currentUser = React.useContext(CurrentUserContext);
+  const currentUser = useContext(CurrentUserContext);
 
   return (
     <div className="header">
@@ -23,17 +23,8 @@ function Header({ handleAddClick, weatherData, onSignUpClick, onLoginClick }) {
         {currentDate}, {weatherData.city}{" "}
       </p>
       <ToggleSwitch />
-      {!currentUser ? (
-        <>
-          <button className="modal__button" onClick={onSignUpClick}>
-            Sign Up
-          </button>
-          <button className="modal__button" onClick={onLoginClick}>
-            Log In
-          </button>
-        </>
-      ) : (
-      <>
+      {currentUser ? (
+          <>
           <button
             className="header__add-clothes"
             type="button"
@@ -43,10 +34,19 @@ function Header({ handleAddClick, weatherData, onSignUpClick, onLoginClick }) {
           </button>
           <Link to="/profile" className="header__link">
             <div className="header__user">
-              <p className="header__username"> {currentUser?.name || ''} </p>
-              <img src={currentUser?.avatar || ''} alt="avatar" className="header__avatar" />
+              <p className="header__username"> {currentUser.name || ''} </p>
+              <img src={currentUser.avatar || ''} alt="avatar" className="header__avatar" />
             </div>
           </Link>
+        </>
+      ) : (
+        <>
+          <button className="modal__button" onClick={onSignUpClick}>
+            Sign Up
+          </button>
+          <button className="modal__button" onClick={onLoginClick}>
+            Log In
+          </button>
         </>
       )}
     </div>

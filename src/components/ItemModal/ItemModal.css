@@ -36,9 +36,9 @@
   cursor: pointer;
 }
 
-/* .modal__delete-button_hidden {
+.modal__delete-button_hidden {
   visibility: none;
-} */
+} 
 
 .modal__footer {
   position: relative;
