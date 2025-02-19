@@ -1,6 +1,6 @@
 import "./ClothesSection.css";
 import ItemCard from "../ItemCard/ItemCard";
-import { CurrentUserContext } from "../../utils/contexts/CurrentUserContext";
+import CurrentUserContext from "../../utils/contexts/CurrentUserContext";
 import React from "react";
 
 function ClothesSection({ onCardClick, clothingItem, handleAddClick, onCardLike }) {

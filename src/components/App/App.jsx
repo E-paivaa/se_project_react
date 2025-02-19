@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import { CurrentUserContext } from "../../utils/contexts/CurrentUserContext.js";
+import CurrentUserContext from "../../utils/contexts/CurrentUserContext.js";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
 import { coordinates, APIkey } from "../../utils/constants";
 import CurrentTemperatureUnitContext from "../../context/CurrentTemperatureUnit";
@@ -131,18 +131,21 @@ function App() {
   };
 
   const handleLogin = (values ) => {
-        loginUser(values)
-        .then((data) => {
-          localStorage.setItem("jwt", data.token);
-          return verifyToken(data.token);
-        })
-        .then((currentUser) => {
-          setCurrentUser(currentUser);
-          setIsLoggedIn(true);
-          closeActiveModal();
-          navigate("/profile");
-        })
-        .catch((err) => console.error(err));
+    if (!values) {
+      return;
+    }
+    loginUser(values)
+    .then((data) => {
+      localStorage.setItem("jwt", data.token);
+      return verifyToken(data.token);
+    })
+    .then((currentUser) => {
+      setCurrentUser(currentUser);
+      setIsLoggedIn(true);
+      navigate("/profile");
+      closeActiveModal();
+    })
+    .catch((err) => console.error(err));
   };
 
   const handleRegistration = (values) => {
@@ -197,7 +200,7 @@ function App() {
   }, []);
 
   return (
-    <CurrentUserContext.Provider value={currentUser}>
+    <CurrentUserContext.Provider value={{currentUser, setCurrentUser}}>
       <div className="page">
         <CurrentTemperatureUnitContext.Provider
           value={{ currentTemperatureUnit, handleToggleSwitchChange }}
@@ -208,8 +211,6 @@ function App() {
               weatherData={weatherData}
               onSignUpClick={handleRegisterModal}
               onLoginClick={handleLoginModal}
-              isLoggedIn={isLoggedIn}
-              
             />
             <Routes>
               <Route
@@ -220,7 +221,6 @@ function App() {
                     onCardClick={handleCardClick}
                     clothingItem={clothingItem}
                     onCardLike={handleCardLike}
-                    isLoggedIn={isLoggedIn}
                   />
                 }
               />
@@ -236,7 +236,6 @@ function App() {
                     handleAddClick={handleAddClick}
                     clothingItem={clothingItem}
                     onLogoutClick={handleLogout}
-                    isLoggedIn={isLoggedIn}
                     />
                     </ProtectedRoute>
                 }

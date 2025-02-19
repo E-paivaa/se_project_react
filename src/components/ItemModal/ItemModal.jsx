@@ -1,6 +1,6 @@
 import "./ItemModal.css";
 import { useContext } from "react";
-import { CurrentUserContext } from "../../utils/contexts/CurrentUserContext";
+import CurrentUserContext from "../../utils/contexts/CurrentUserContext";
 
 function ItemModal({ item, onClose, isOpen, handleDeleteItem}) {
   const currentUser = useContext(CurrentUserContext);
