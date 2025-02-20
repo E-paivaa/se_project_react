@@ -5,18 +5,18 @@ import React from "react";
 
 function Sidebar({onLogoutClick, OnEditClick}) {
 
-  const currentUser = React.useContext(CurrentUserContext);
+  const { currentUser } = React.useContext(CurrentUserContext);
 
   return (
     <div className="sidebar">
       <img
         className="sidebar__avatar"
-        src={currentUser?.avatar || headerAvatar}
+        src={currentUser.avatar || headerAvatar}
         alt="Default avatar"
         
       />
       <p className="sidebar__username">
-        {currentUser?.name  || 'Placeholder'}
+        {currentUser.name || 'Placeholder'}
       </p>
       <div className="sidebar__log">
       <button className="sidebar__change" type="button" onClick={OnEditClick}>Change profile data</button>

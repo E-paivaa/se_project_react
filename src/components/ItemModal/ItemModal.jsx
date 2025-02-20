@@ -1,9 +1,9 @@
 import "./ItemModal.css";
-import { useContext } from "react";
+import React from "react";
 import CurrentUserContext from "../../utils/contexts/CurrentUserContext";
 
 function ItemModal({ item, onClose, isOpen, handleDeleteItem}) {
-  const currentUser = useContext(CurrentUserContext);
+  const currentUser = React.useContext(CurrentUserContext);
   const isOwn = item.owner === currentUser._id;
   const itemDelete = (
     `modal__delete-button ${isOwn ? '' : 'modal__delete-button_hidden'}`

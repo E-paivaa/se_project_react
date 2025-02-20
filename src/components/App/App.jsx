@@ -43,7 +43,7 @@ function App() {
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
   const [clothingItem, setClothingItem] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState();
 
   const handleCardClick = (card) => {
     setActiveModal("preview");
@@ -136,6 +136,7 @@ function App() {
     }
     loginUser(values)
     .then((data) => {
+      console.log(data);
       localStorage.setItem("jwt", data.token);
       return verifyToken(data.token);
     })

@@ -8,7 +8,7 @@ function ItemCard({ item, onCardClick, onCardLike, isLoggedIn}) {
     onCardClick(item);
   };
 
-  const currentUser = React.useContext(CurrentUserContext);
+  const { currentUser } = React.useContext(CurrentUserContext);
   const isLiked = currentUser ? item.likes.some((id) => id === currentUser._id) : false;
 
   const handleLike = () => {
