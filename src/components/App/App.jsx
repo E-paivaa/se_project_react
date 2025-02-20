@@ -43,7 +43,7 @@ function App() {
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
   const [clothingItem, setClothingItem] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [currentUser, setCurrentUser] = useState({});
+  const [currentUser, setCurrentUser] = useState(null);
 
   const handleCardClick = (card) => {
     setActiveModal("preview");
@@ -142,8 +142,8 @@ function App() {
     .then((currentUser) => {
       setCurrentUser(currentUser);
       setIsLoggedIn(true);
-      navigate("/profile");
       closeActiveModal();
+      navigate("/profile");
     })
     .catch((err) => console.error(err));
   };

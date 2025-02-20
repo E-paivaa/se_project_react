@@ -4,7 +4,7 @@ import CurrentUserContext from "../../utils/contexts/CurrentUserContext";
 import React from "react";
 
 function ClothesSection({ onCardClick, clothingItem, handleAddClick, onCardLike }) {
-  const currentUser = React.useContext(CurrentUserContext);
+  const { currentUser }= React.useContext(CurrentUserContext);
   const userItem =
   currentUser && currentUser._id
     ? clothingItem.filter((item) => item.owner === currentUser._id)

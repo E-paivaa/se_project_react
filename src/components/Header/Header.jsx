@@ -12,7 +12,7 @@ function Header({ handleAddClick, weatherData, onSignUpClick, onLoginClick}) {
   });
 
 
-  const currentUser = useContext(CurrentUserContext);
+  const {currentUser} = useContext(CurrentUserContext);
 
   return (
     <div className="header">
