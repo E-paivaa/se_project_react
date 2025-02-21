@@ -9,6 +9,7 @@ function ItemCard({ item, onCardClick, onCardLike}) {
   };
 
   const { currentUser } = React.useContext(CurrentUserContext);
+  
   const isLiked = currentUser ? item.likes.some((id) => id === currentUser._id) : false;
 
   const handleLike = () => {
