@@ -48,5 +48,5 @@
 }
 
 .card__like_active {
-  background-image: url(../../assets/likedbutton.png);
+  background-image: url(../../assets/likedbutton.svg);
 }

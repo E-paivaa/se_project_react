@@ -3,7 +3,7 @@ import CurrentUserContext from "../../utils/contexts/CurrentUserContext";
 import React from "react";
 
 
-function ItemCard({ item, onCardClick, onCardLike, isLoggedIn}) {
+function ItemCard({ item, onCardClick, onCardLike}) {
   const handleCardClick = () => {
     onCardClick(item);
   };
@@ -32,7 +32,7 @@ function ItemCard({ item, onCardClick, onCardLike, isLoggedIn}) {
   return (
     <li className="card">
       <h2 className="card__name"> {item.name} </h2>
-      {isLoggedIn ? (
+      {currentUser ? (
           <button
             className={itemLikeButtonClassName}
             onClick={handleLike}

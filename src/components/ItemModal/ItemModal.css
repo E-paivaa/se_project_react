@@ -36,10 +36,6 @@
   cursor: pointer;
 }
 
-.modal__delete-button_hidden {
-  visibility: none;
-} 
-
 .modal__footer {
   position: relative;
   padding: 20px 0 32px 32px;
