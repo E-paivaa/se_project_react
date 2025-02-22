@@ -163,7 +163,11 @@ function App() {
     const token = localStorage.getItem("jwt");
       editUser(name, imageUrl, token)
         .then(() => {
-          setCurrentUser({name, avatar:imageUrl});
+          setCurrentUser((prevUser) => ({
+            ...prevUser,
+            name,
+            avatar: imageUrl,
+          }));
           closeActiveModal();
         })
         .catch((err) => console.error(err));
