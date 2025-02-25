@@ -1,16 +1,17 @@
 import "./ItemCard.css";
-import CurrentUserContext from "../../utils/contexts/CurrentUserContext";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 import React from "react";
 
-
-function ItemCard({ item, onCardClick, onCardLike}) {
+function ItemCard({ item, onCardClick, onCardLike }) {
   const handleCardClick = () => {
     onCardClick(item);
   };
 
   const { currentUser } = React.useContext(CurrentUserContext);
-  
-  const isLiked = currentUser ? item.likes.some((id) => id === currentUser._id) : false;
+
+  const isLiked = currentUser
+    ? item.likes.some((id) => id === currentUser._id)
+    : false;
 
   const handleLike = () => {
     const newLikes = [...item.likes];
@@ -20,20 +21,20 @@ function ItemCard({ item, onCardClick, onCardLike}) {
     } else {
       newLikes.push(currentUser._id);
     }
-    onCardLike({ id: item._id, isLiked: isLiked })
-      .catch((err) => {
-        console.error("Error toggling like:", err);
-      });
+    onCardLike({ id: item._id, isLiked: isLiked }).catch((err) => {
+      console.error("Error toggling like:", err);
+    });
   };
 
   const itemLikeButtonClassName = isLiked
-  ? "card__like card__like_active"
-  : "card__like";
+    ? "card__like card__like_active"
+    : "card__like";
 
   return (
     <li className="card">
-      <h2 className="card__name"> {item.name} </h2>
-      {currentUser ? (
+      <div className="card__container">
+        <h2 className="card__name"> {item.name} </h2>
+        {currentUser ? (
           <button
             className={itemLikeButtonClassName}
             onClick={handleLike}
@@ -42,6 +43,7 @@ function ItemCard({ item, onCardClick, onCardLike}) {
         ) : (
           <></>
         )}
+      </div>
       <img
         onClick={handleCardClick}
         className="card__image"

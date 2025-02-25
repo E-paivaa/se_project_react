@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import CurrentUserContext from "../../utils/contexts/CurrentUserContext.js";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
 import { coordinates, APIkey } from "../../utils/constants";
 import CurrentTemperatureUnitContext from "../../context/CurrentTemperatureUnit";
@@ -19,18 +19,14 @@ import EditProfileModal from "../EditProfileModal/EditProfileModal.jsx";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 import {
-  editUser, 
-  removeCardLike, 
+  editUser,
+  removeCardLike,
   addCardLike,
-  deleteItems, 
+  deleteItems,
   addItems,
-  getItems
+  getItems,
 } from "../../utils/api";
-import {
-  registerUser,
-  loginUser,
-  verifyToken
-} from "../../utils/auth.js";
+import { registerUser, loginUser, verifyToken } from "../../utils/auth.js";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -43,7 +39,7 @@ function App() {
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
   const [clothingItem, setClothingItem] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [currentUser, setCurrentUser] = useState();
+  const [currentUser, setCurrentUser] = useState(null);
 
   const handleCardClick = (card) => {
     setActiveModal("preview");
@@ -73,7 +69,6 @@ function App() {
 
   const handleLogout = () => {
     setIsLoggedIn(false);
-    setCurrentUser(currentUser === null);
     localStorage.clear();
   };
 
@@ -90,7 +85,7 @@ function App() {
   function handleCardLike({ id, isLiked }) {
     console.log("Item ID:", id);
     const token = localStorage.getItem("jwt");
-     !isLiked
+    !isLiked
       ? addCardLike(id, token)
           .then((updatedCard) => {
             setClothingItem((cards) =>
@@ -111,66 +106,68 @@ function App() {
 
   const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
     const token = localStorage.getItem("jwt");
-      addItems(name, imageUrl, weather, token)
-      .then((values) => {
-        setClothingItem([values, ...clothingItem]);
+    addItems(name, imageUrl, weather, token)
+      .then((res) => {
+        setClothingItem([res.data, ...clothingItem]);
         closeActiveModal();
       })
       .catch((err) => console.log(err));
   };
 
   const handleDeleteItem = () => {
-    if(selectedCard){
-     deleteItems(selectedCard._id)
-      .then(() => {
-        setClothingItem(clothingItem.filter((item) => item._id !== selectedCard._id));
-        closeActiveModal();
-      })
-      .catch((error) => console.log(error));
+    if (selectedCard) {
+      deleteItems(selectedCard._id)
+        .then(() => {
+          setClothingItem(
+            clothingItem.filter((item) => item._id !== selectedCard._id)
+          );
+          closeActiveModal();
+        })
+        .catch((error) => console.log(error));
     }
   };
 
-  const handleLogin = (values ) => {
+  const handleLogin = (values) => {
     if (!values) {
       return;
     }
     loginUser(values)
-    .then((data) => {
-      console.log(data);
-      localStorage.setItem("jwt", data.token);
-      return verifyToken(data.token);
-    })
-    .then((currentUser) => {
-      setCurrentUser(currentUser);
-      setIsLoggedIn(true);
-      closeActiveModal();
-      navigate("/profile");
-    })
-    .catch((err) => console.error(err));
+      .then((data) => {
+        console.log(data);
+        localStorage.setItem("jwt", data.token);
+        return verifyToken(data.token);
+      })
+      .then((currentUser) => {
+        setCurrentUser(currentUser);
+        setIsLoggedIn(true);
+        closeActiveModal();
+        navigate("/profile");
+      })
+      .catch((err) => console.error(err));
   };
 
   const handleRegistration = (values) => {
-        registerUser(values)
-        .then((res) => {
-          console.log(res);
-          closeActiveModal();
-          handleLogin({ email: values.email, password: values.password });
-        })
-        .catch((err) => console.error(err));
+    registerUser(values)
+      .then((res) => {
+        console.log(res);
+        closeActiveModal();
+        handleLogin({ email: values.email, password: values.password });
+      })
+      .catch((err) => console.error(err));
   };
 
-  const handleEdit = ({name, imageUrl}) => {
+  const handleEdit = ({ name, imageUrl }) => {
     const token = localStorage.getItem("jwt");
-      editUser(name, imageUrl, token)
-        .then(() => {
-          setCurrentUser((prevUser) => ({
-            ...prevUser,
-            name,
-            avatar: imageUrl,
-          }));
-          closeActiveModal();
-        })
-        .catch((err) => console.error(err));
+    editUser(name, imageUrl, token)
+      .then(() => {
+        setCurrentUser((prevUser) => ({
+          ...prevUser,
+          name,
+          avatar: imageUrl,
+        }));
+        closeActiveModal();
+      })
+      .catch((err) => console.error(err));
   };
 
   useEffect(() => {
@@ -193,7 +190,7 @@ function App() {
   useEffect(() => {
     const token = localStorage.getItem("jwt");
     if (token) {
-        verifyToken(token)
+      verifyToken(token)
         .then((user) => {
           setCurrentUser(user);
           setIsLoggedIn(true);
@@ -204,8 +201,21 @@ function App() {
     }
   }, []);
 
+  useEffect(() => {
+    if (!activeModal) return;
+    const handleEscClose = (e) => {
+      if (e.key === "Escape") {
+        closeActiveModal();
+      }
+    };
+    document.addEventListener("keydown", handleEscClose);
+    return () => {
+      document.removeEventListener("keydown", handleEscClose);
+    };
+  }, [activeModal]);
+
   return (
-    <CurrentUserContext.Provider value={{currentUser, setCurrentUser}}>
+    <CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>
       <div className="page">
         <CurrentTemperatureUnitContext.Provider
           value={{ currentTemperatureUnit, handleToggleSwitchChange }}
@@ -232,17 +242,17 @@ function App() {
               <Route
                 path="/profile"
                 element={
-                 <ProtectedRoute isLoggedIn={isLoggedIn}>
-                  <Profile
-                    onCardLike={handleCardLike}
-                    onClose={closeActiveModal}
-                    OnEditClick={handleEditModal}
-                    onCardClick={handleCardClick}
-                    handleAddClick={handleAddClick}
-                    clothingItem={clothingItem}
-                    onLogoutClick={handleLogout}
+                  <ProtectedRoute isLoggedIn={isLoggedIn}>
+                    <Profile
+                      onCardLike={handleCardLike}
+                      onClose={closeActiveModal}
+                      OnEditClick={handleEditModal}
+                      onCardClick={handleCardClick}
+                      handleAddClick={handleAddClick}
+                      clothingItem={clothingItem}
+                      onLogoutClick={handleLogout}
                     />
-                    </ProtectedRoute>
+                  </ProtectedRoute>
                 }
               />
             </Routes>

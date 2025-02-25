@@ -104,7 +104,7 @@ const RegisterModal = ({
                 />
             </label>
             <div className="modal__button-div">
-            <button type="button" className="modal__button-sign-up" onClick={handleRegistrationSubmit}>
+            <button type="submit" className="modal__button-sign-up">
                 Sign Up
                 {" "}
             </button>

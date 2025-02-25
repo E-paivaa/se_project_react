@@ -1,8 +1,8 @@
 import "./ItemModal.css";
 import React from "react";
-import CurrentUserContext from "../../utils/contexts/CurrentUserContext";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
-function ItemModal({ item, onClose, isOpen, handleDeleteItem}) {
+function ItemModal({ item, onClose, isOpen, handleDeleteItem }) {
   const { currentUser } = React.useContext(CurrentUserContext);
 
   return (
@@ -17,13 +17,13 @@ function ItemModal({ item, onClose, isOpen, handleDeleteItem}) {
           <h2 className="modal__description">{item.name}</h2>
           <p className="modal__weather"> Weather: {item.weather}</p>
           {currentUser ? (
-          <button
-            type="button"
-            className= "modal__delete-button" 
-            onClick={() => handleDeleteItem(item)}
-          >
-            Delete Item
-          </button>
+            <button
+              type="button"
+              className="modal__delete-button"
+              onClick={() => handleDeleteItem(item)}
+            >
+              Delete Item
+            </button>
           ) : (
             <></>
           )}

@@ -37,6 +37,8 @@ export default function AddItemModal({
       title="New Garment"
       isOpen={isOpen}
       onClose={onClose}
+      onSubmit={handleAddSubmit}
+
     >
       <label htmlFor="name" className="modal__label">
         Name{""}
@@ -104,7 +106,7 @@ export default function AddItemModal({
           {""}Cold
         </label>
       </fieldset>
-      <button type="submit" className="modal__submit" onClick={handleAddSubmit}> Add Garment </button>
+      <button type="submit" className="modal__submit" > Add Garment </button>
     </ModalWithForm>
   );
 }
